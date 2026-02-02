@@ -1,18 +1,14 @@
-mod crypto;
-mod protocol;
-mod transport;
-mod fec;
-
-use crypto::handshake::perform_handshake;
-use crypto::aead::encrypt;
-use protocol::chunk::ChunkReader;
-use protocol::packet::{PacketHeader, PacketType, PROTOCOL_VERSION};
-use protocol::constants::{DATA_SHARDS, PARITY_SHARDS};
-use protocol::shard::ShardHeader;
-use fec::reed_solomon::RsCodec;
-use transport::udp::send_packet;
+use Blue_Fox::crypto::handshake::perform_handshake;
+use Blue_Fox::crypto::aead::encrypt;
+use Blue_Fox::protocol::chunk::ChunkReader;
+use Blue_Fox::protocol::packet::{PacketHeader, PacketType, PROTOCOL_VERSION};
+use Blue_Fox::protocol::constants::{DATA_SHARDS, PARITY_SHARDS};
+use Blue_Fox::protocol::shard::ShardHeader;
+use Blue_Fox::fec::reed_solomon::RsCodec;
+use Blue_Fox::transport::udp::send_packet;
 
 use std::net::UdpSocket;
+
 
 fn main() {
     let handshake = perform_handshake();

@@ -1,11 +1,5 @@
-mod crypto;
-mod protocol;
-mod transport;
-mod fec;
-
-use crypto::handshake::perform_handshake;
-use transport::receiver::Receiver;
-
+use Blue_Fox::transport::receiver::Receiver;
+use Blue_Fox::crypto::handshake::perform_handshake;
 fn main() {
     let handshake = perform_handshake();
 
