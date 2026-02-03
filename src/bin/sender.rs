@@ -11,8 +11,8 @@ use std::net::UdpSocket;
 
 
 fn main() {
-    let handshake = perform_handshake();
-
+    //let handshake = perform_handshake();
+    let session_key = [42u8; 32];
     let socket =
         UdpSocket::bind("127.0.0.1:50000").expect("bind sender");
 
@@ -41,7 +41,7 @@ fn main() {
         nonce[8..12].copy_from_slice(&seq_no.to_be_bytes());
 
         let ciphertext = encrypt(
-            &handshake.session_key,
+            &session_key,
             &nonce,
             &chunk,
             &aad,
@@ -74,10 +74,11 @@ fn main() {
 
         for (i, shard) in shards.iter().enumerate() {
             let shard_header = ShardHeader {
-                session_id,
-                chunk_seq: seq_no,
-                shard_index: i as u8,
-                total_shards,
+             session_id,
+             chunk_seq: seq_no,
+             payload_len: chunk.len() as u16,
+             shard_index: i as u8,
+             total_shards,
             };
 
             let mut packet = Vec::new();
